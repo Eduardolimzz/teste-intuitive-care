@@ -54,3 +54,5 @@ Thumbs.db
 # KEEP EMPTY DIRS
 # ===============================
 !.gitkeep
+
+/data/

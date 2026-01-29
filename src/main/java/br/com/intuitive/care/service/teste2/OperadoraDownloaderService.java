@@ -4,8 +4,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class OperadoraDownloaderService {
@@ -38,4 +43,18 @@ public class OperadoraDownloaderService {
             throw new RuntimeException("Erro ao baixar Relatorio_cadop.csv da ANS", e);
         }
     }
+
+    public Path downloadCadastroOperadoras() throws IOException {
+        String url = "https://dadosabertos.ans.gov.br/FTP/PDA/operadoras_de_plano_de_saude_ativas/Relatorio_cadop.csv";
+
+        Path outputPath = Paths.get("data/output/Relatorio_cadop.csv");
+        Files.createDirectories(outputPath.getParent());
+
+        try (InputStream in = new URL(url).openStream()) {
+            Files.copy(in, outputPath, StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return outputPath;
+    }
+
 }

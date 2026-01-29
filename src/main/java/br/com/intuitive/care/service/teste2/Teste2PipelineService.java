@@ -44,6 +44,8 @@ public class Teste2PipelineService {
                 basePath, "data", "output", "despesas_agregadas.csv"
         );
 
+        Path cadastroPath = downloader.downloadCadastroOperadoras();
+
         Map<String, String[]> cadastroMap =
                 enrichment.carregarCadastro(cadastroCsv.toString());
 

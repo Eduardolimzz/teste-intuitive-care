@@ -1,4 +1,4 @@
-package br.com.intuitive.care.config;
+package br.com.intuitive.care.config.teste1;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

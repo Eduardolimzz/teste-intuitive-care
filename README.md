@@ -10,14 +10,14 @@
 ## 📋 Sumário
 
 - [Sobre o Projeto](#-sobre-o-projeto)
+- [Status dos Testes](#-status-dos-testes)
+- [Teste 1](#-teste-1--integração-com-api-pública)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Pré-requisitos](#-pré-requisitos)
-- [Instalação](#-instalação)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Trade-offs Técnicos](#-trade-offs-técnicos)
+- [Obserrvações](#-observações)
 - [Autor](#-autor)
-- [Documentação](#documentação)
-- [Trade-offs Técnicos](#trade-offs-técnicos)
-- [Resultados](#resultados)
 
 ---
 
@@ -182,7 +182,7 @@ Este projeto faz parte de um processo seletivo e está sendo desenvolvido de for
 
 ---
 
-## Autor
+## 👤 Autor
 
 <div align="center">
   <img src="https://github.com/Eduardolimzz.png" width="100px" style="border-radius: 50%">

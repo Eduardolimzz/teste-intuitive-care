@@ -1,8 +1,8 @@
-package br.com.intuitive.care.controller;
+package br.com.intuitive.care.controller.teste1;
 
-import br.com.intuitive.care.service.AnsFileDownloaderService;
-import br.com.intuitive.care.service.AnsService;
-import br.com.intuitive.care.service.ConsolidacaoService;
+import br.com.intuitive.care.service.teste1.AnsFileDownloaderService;
+import br.com.intuitive.care.service.teste1.AnsService;
+import br.com.intuitive.care.service.teste1.ConsolidacaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

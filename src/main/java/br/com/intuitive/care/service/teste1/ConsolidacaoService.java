@@ -1,6 +1,6 @@
-package br.com.intuitive.care.service;
+package br.com.intuitive.care.service.teste1;
 
-import br.com.intuitive.care.model.DespesaRecord;
+import br.com.intuitive.care.model.teste1.DespesaRecord;
 import org.apache.commons.csv.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

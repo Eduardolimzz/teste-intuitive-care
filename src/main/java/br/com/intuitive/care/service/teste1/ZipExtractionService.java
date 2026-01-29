@@ -1,15 +1,20 @@
-package br.com.intuitive.care.service;
+package br.com.intuitive.care.service.teste1;
 
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @Service
 public class ZipExtractionService {
 
+    /**
+     * ✔️ MÉTODO ORIGINAL – USADO NO TESTE 1
+     * NÃO FOI ALTERADO
+     */
     public void extractZip(Path zipFilePath, Path destinationDir) {
         try {
             Files.createDirectories(destinationDir);
@@ -34,6 +39,27 @@ public class ZipExtractionService {
             }
         } catch (IOException e) {
             throw new RuntimeException("Erro ao extrair ZIP: " + zipFilePath, e);
+        }
+    }
+
+    /**
+     * 🆕 NOVO MÉTODO – USADO NO TESTE 2
+     * Extrai o ZIP e retorna o caminho do CSV encontrado
+     */
+    public Path extractZipAndReturnCsv(Path zipFilePath, Path destinationDir) {
+        extractZip(zipFilePath, destinationDir);
+
+        try {
+            Optional<Path> csvEncontrado =
+                    Files.walk(destinationDir)
+                            .filter(p -> p.toString().toLowerCase().endsWith(".csv"))
+                            .findFirst();
+
+            return csvEncontrado.orElseThrow(() ->
+                    new RuntimeException("Nenhum CSV encontrado após extração do ZIP"));
+
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao localizar CSV extraído", e);
         }
     }
 }

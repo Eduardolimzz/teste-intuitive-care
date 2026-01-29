@@ -1,4 +1,4 @@
-package br.com.intuitive.care.model;
+package br.com.intuitive.care.model.teste1;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

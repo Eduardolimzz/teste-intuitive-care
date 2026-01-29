@@ -1,4 +1,4 @@
-package br.com.intuitive.care.service;
+package br.com.intuitive.care.service.teste1;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

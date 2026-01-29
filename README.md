@@ -1,4 +1,4 @@
-~~# Teste IntuitiveCare 2026 - Estágio
+# Teste IntuitiveCare 2026 - Estágio
 
 **Candidato:** Eduardo Lima dos Santos  
 **Data:** Janeiro 2026  

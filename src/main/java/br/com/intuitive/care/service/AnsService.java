@@ -21,6 +21,7 @@ public class AnsService {
     }
 
     public void extrairArquivosZip() {
+
         if (!Files.exists(RAW_BASE)) {
             throw new RuntimeException("Diretório RAW não encontrado: " + RAW_BASE);
         }
@@ -28,17 +29,15 @@ public class AnsService {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(RAW_BASE, "*.zip")) {
 
             for (Path zipFile : stream) {
-
                 String nomeZip = zipFile.getFileName().toString();
                 String trimestre = nomeZip.replace(".zip", "");
 
                 Path destino = PROCESSED_BASE.resolve(trimestre);
-
                 zipExtractionService.extractZip(zipFile, destino);
             }
 
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao extrair arquivos ZIP da ANS", e);
+            throw new RuntimeException("Erro ao extrair ZIPs da ANS", e);
         }
     }
 }

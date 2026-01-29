@@ -12,9 +12,7 @@ public class ZipExtractionService {
 
     public void extractZip(Path zipFilePath, Path destinationDir) {
         try {
-            if (!Files.exists(destinationDir)) {
-                Files.createDirectories(destinationDir);
-            }
+            Files.createDirectories(destinationDir);
 
             try (ZipInputStream zis = new ZipInputStream(
                     new BufferedInputStream(Files.newInputStream(zipFilePath)))) {
@@ -22,20 +20,18 @@ public class ZipExtractionService {
                 ZipEntry entry;
                 while ((entry = zis.getNextEntry()) != null) {
 
-                    Path newFilePath = destinationDir.resolve(entry.getName());
+                    Path novoArquivo = destinationDir.resolve(entry.getName());
 
                     if (entry.isDirectory()) {
-                        Files.createDirectories(newFilePath);
+                        Files.createDirectories(novoArquivo);
                     } else {
-                        Files.createDirectories(newFilePath.getParent());
-
-                        try (OutputStream os = Files.newOutputStream(newFilePath)) {
+                        Files.createDirectories(novoArquivo.getParent());
+                        try (OutputStream os = Files.newOutputStream(novoArquivo)) {
                             zis.transferTo(os);
                         }
                     }
                 }
             }
-
         } catch (IOException e) {
             throw new RuntimeException("Erro ao extrair ZIP: " + zipFilePath, e);
         }

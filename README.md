@@ -151,7 +151,57 @@ data/output/despesas_agregadas.csv
 ```
 
 ---
+## ✅ Testes Unitários
 
+O projeto conta com testes unitários automatizados para garantir a confiabilidade das regras de negócio implementadas, especialmente no Teste 2 (validação, enriquecimento e agregação de dados).
+
+Os testes foram desenvolvidos utilizando JUnit 5, cobrindo cenários positivos e negativos das validações.
+
+---
+
+###  Testes implementados
+
+Atualmente, estão cobertos os seguintes cenários:
+
+- Validação de CNPJ válido
+- Rejeição de CNPJ inválido ou nulo
+- Validação de razão social válida
+- Rejeição de razão social vazia ou nula
+- Validação de valores positivos
+- Rejeição de valores zero ou negativos
+
+Esses testes garantem que apenas dados consistentes avancem para as etapas de enriquecimento e agregação.
+
+---
+
+### ▶️ Executando os testes
+
+Para executar todos os testes unitários do projeto, utilize o comando abaixo:
+```bash
+mvn test
+```
+---
+
+### 📄 Exemplo de saída esperada
+
+```bash
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running br.com.intuitive.care.teste2.ValidationServiceTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] BUILD SUCCESS
+[INFO] -------------------------------------------------------
+```
+---
+
+### 📌 Observação
+
+Os testes unitários foram priorizados nas regras críticas de validação, por serem pontos sensíveis no processamento de grandes volumes de dados.
+As demais etapas (download, parsing e agregação) foram testadas de forma integrada durante a execução do pipeline completo.
+
+---
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend

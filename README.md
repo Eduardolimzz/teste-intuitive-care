@@ -32,6 +32,72 @@ O projeto está em **fase inicial**, com foco na configuração correta do ambie
 
 ---
 
+## 📌 Status dos Testes
+
+- [x] **Teste 1 – Integração com API Pública**
+- [ ] **Teste 2 – Transformação e Validação de Dados**
+- [ ] **Teste 3 – Banco de Dados e Análise SQL**
+- [ ] **Teste 4 – API e Interface Web**
+
+---
+
+## ✅ Teste 1 – Integração com API Pública
+
+### 📎 Objetivo
+
+Realizar a integração com a **API de Dados Abertos da ANS**, processar os arquivos de demonstrações contábeis e gerar um arquivo consolidado contendo as **despesas com eventos/sinistros** dos **últimos 3 trimestres disponíveis**.
+
+---
+
+### ⚙️ O que foi implementado
+
+O Teste 1 contempla as seguintes etapas:
+
+#### 1. Acesso à API da ANS
+- Consumo da API pública da ANS:
+```bash
+https://dadosabertos.ans.gov.br/FTP/PDA/
+```
+
+- Identificação automática dos **últimos 3 trimestres disponíveis**
+- Download dos arquivos compactados (ZIP), considerando variações de estrutura entre diretórios
+
+#### 2. Processamento dos Arquivos
+- Download automático dos arquivos ZIP
+- Extração dos arquivos compactados
+- Identificação e leitura apenas dos arquivos relacionados a **Despesas com Eventos/Sinistros**
+- Normalização dos dados relevantes para um modelo único
+
+#### 3. Consolidação dos Dados
+- Consolidação das informações dos 3 trimestres em memória
+- Geração de um arquivo CSV consolidado com as colunas:
+- `CNPJ`
+- `RazaoSocial`
+- `Ano`
+- `Trimestre`
+- `ValorDespesas`
+
+#### 4. Tratamento de Inconsistências
+Durante o processamento, foram tratados os seguintes cenários:
+- CNPJs duplicados com razões sociais diferentes
+- Valores zerados ou negativos
+- Variações no formato de trimestre/ano
+
+As decisões de tratamento estão documentadas na seção de **Trade-offs Técnicos**.
+
+#### 5. Resultado Final
+- Geração do arquivo:
+```bash
+consolidado_despesas.csv
+```
+
+- Compactação do resultado final em:
+```bash
+consolidado_despesas.zip
+```
+
+---
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
@@ -72,59 +138,6 @@ git --version
 
 ---
 
-## 🚀 Instalação
-
-### 1. Clonar o Repositório
-
-```bash
-git clone https://github.com/Eduardolimzz/teste-intuitive-care.git
-cd teste-intuitive-care
-```
-
-### 2. Configurar o Banco de Dados
-
-```sql
-CREATE DATABASE intuitive_care;
-
-CREATE USER 'intuitive_user'@'localhost'
-IDENTIFIED BY 'intuitive123';
-
-GRANT ALL PRIVILEGES ON intuitive_care.*
-TO 'intuitive_user'@'localhost';
-
-FLUSH PRIVILEGES;
-```
-
-### 3. Configurar application.properties
-
-Editar `src/main/resources/application.properties`:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/intuitive_care?useSSL=false&serverTimezone=UTC
-spring.datasource.username=intuitive_user
-spring.datasource.password=intuitive123
-```
-
-### 4. Instalar Dependências Maven
-
-```bash
-mvn clean install
-mvn spring-boot:run
-```
-### A aplicação ficará disponível em:
-
-```bash
-http://localhost:8080
-```
-
-### Swagger (quando houver controllers):
-
-```bash
-http://localhost:8080/swagger-ui.html
-```
-
----
-
 ## 📁 Estrutura do Projeto
 
 ```
@@ -132,33 +145,54 @@ teste-intuitive-care/
 ├── src/
 │   ├── main/
 │   │   ├── java/
+│   │   │   └── br/com/intuitive/care/
+│   │   │       ├── config/
+│   │   │       ├── controller/
+│   │   │       ├── model/
+│   │   │       └── service/
 │   │   └── resources/
 │   │       └── application.properties
-│   │
 │   └── test/
-│       └── java/
-│
-├── .gitignore
+├── data/
+├── logs/
 ├── pom.xml
 └── README.md
+
 ```
+---
+## 🧠 Trade-offs Técnicos
+
+### Processamento dos arquivos
+
+- **Estratégia escolhida:** processamento incremental
+- **Justificativa:** evita alto consumo de memória considerando o volume de dados e possíveis variações na estrutura dos arquivos disponibilizados pela ANS.
+
+### Tratamento de inconsistências
+
+- **Valores zerados ou negativos:** mantidos no dataset para análise, sem descarte automático, preservando a integridade dos dados originais.
+- **CNPJs duplicados:** consolidação realizada por trimestre, mantendo a rastreabilidade das informações.
+- **Variações de formato:** normalização aplicada durante o parsing dos dados para garantir consistência no arquivo final.
+
+As escolhas priorizaram **simplicidade, legibilidade e resiliência**, seguindo o princípio **KISS (Keep It Simple)**.
 
 ---
-
-## 👤 Autor
-
-**Eduardo Lima dos Santos**
-- GitHub: [@Eduardolimzz](https://github.com/Eduardolimzz)
-- LinkedIn: [Eduardo Lima dos Santos](https://www.linkedin.com/in/eduardo-lima-dos-santos-3b1092316/)
-- Email: eduardoaluno1800@gmail.com
-
----
-
 ## 📄 Observações
 
 Este projeto faz parte de um processo seletivo e está sendo desenvolvido de forma incremental, priorizando boas práticas, clareza de código e organização.
 
 ---
 
+## Autor
+
+<div align="center">
+  <img src="https://github.com/Eduardolimzz.png" width="100px" style="border-radius: 50%">
+
+**Eduardo Lima dos Santos**
+
+[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github)](https://github.com/Eduardolimzz)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/eduardo-lima-3b1092316/)
+
+**Contato**: eduardoaluno1800@gmail.com
+---
 
 **Desenvolvido com ☕ e 💙 para IntuitiveCare**

@@ -1,4 +1,4 @@
-# Teste IntuitiveCare 2026 - Estágio
+~~# Teste IntuitiveCare 2026 - Estágio
 
 **Candidato:** Eduardo Lima dos Santos  
 **Data:** Janeiro 2026  
@@ -35,7 +35,7 @@ O projeto está em **fase inicial**, com foco na configuração correta do ambie
 ## 📌 Status dos Testes
 
 - [x] **Teste 1 – Integração com API Pública**
-- [ ] **Teste 2 – Transformação e Validação de Dados**
+- [x] **Teste 2 – Transformação, Validação e Agregação de Dados**
 - [ ] **Teste 3 – Banco de Dados e Análise SQL**
 - [ ] **Teste 4 – API e Interface Web**
 
@@ -95,6 +95,60 @@ consolidado_despesas.csv
 ```bash
 consolidado_despesas.zip
 ```
+---
+## ✅ Teste 2 – Transformação, Validação e Agregação de Dados
+
+### 📎 Objetivo
+
+A partir do arquivo consolidado gerado no Teste 1, realizar:
+- Validação dos dados
+- Enriquecimento com informações cadastrais da ANS
+- Agregação estatística das despesas
+- Geração de um novo arquivo CSV com métricas consolidadas
+
+### ⚙️ Etapas implementadas
+
+#### 1. Entrada de dados
+- Leitura do arquivo:
+```bash
+data/output/consolidado_despesas.csv
+```
+#### 2. Download do cadastro de operadoras
+
+- Download automático do arquivo Relatorio_cadop.csv da ANS
+- Leitura e indexação dos dados por CNPJ
+
+#### 3. Validação dos registros
+Foram implementadas validações para:
+- CNPJ (formato e dígitos verificadores)
+- Razão social (não nula e não vazia)
+- Valores de despesa (positivos)
+- Essas validações possuem testes unitários dedicados.
+
+#### 4. Enriquecimento dos dados
+Cada despesa foi enriquecida com:
+
+- Registro ANS
+- Modalidade da operadora
+- UF (quando disponível)
+
+#### 5. Agregação estatística
+
+Os dados foram agregados por:
+- Razão Social
+- UF
+- 
+Com cálculo de:
+- Total de despesas
+- Média
+- Desvio padrão
+
+#### 6. Resultado final
+
+Geração do arquivo:
+```bash
+data/output/despesas_agregadas.csv
+```
 
 ---
 
@@ -143,18 +197,68 @@ git --version
 ```
 teste-intuitive-care/
 ├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── br/com/intuitive/care/
-│   │   │       ├── config/
-│   │   │       ├── controller/
-│   │   │       ├── model/
-│   │   │       └── service/
-│   │   └── resources/
-│   │       └── application.properties
-│   └── test/
+│ ├── main/
+│ │ ├── java/
+│ │ │ └── br/com/intuitive/care/
+│ │ │
+│ │ │ ├── config/
+│ │ │ │ ├── teste1/
+│ │ │ │ └── teste2/
+│ │ │
+│ │ │ ├── controller/
+│ │ │ │ ├── teste1/
+│ │ │ │ │ └── AnsController.java
+│ │ │ │ └── teste2/
+│ │ │ │ └── Teste2Controller.java
+│ │ │
+│ │ │ ├── model/
+│ │ │ │ ├── teste1/
+│ │ │ │ │ └── DespesaRecord.java
+│ │ │ │ └── teste2/
+│ │ │ │ ├── DespesaConsolidada.java
+│ │ │ │ ├── DespesaEnriquecida.java
+│ │ │ │ └── DespesaAgregada.java
+│ │ │
+│ │ │ ├── repository/
+│ │ │ │ └── (reservado para Teste 3)
+│ │ │
+│ │ │ ├── service/
+│ │ │ │ ├── teste1/
+│ │ │ │ │ ├── AnsFileDownloaderService.java
+│ │ │ │ │ ├── AnsService.java
+│ │ │ │ │ ├── ConsolidacaoService.java
+│ │ │ │ │ └── ZipExtractionService.java
+│ │ │ │ └── teste2/
+│ │ │ │ ├── OperadoraDownloaderService.java
+│ │ │ │ ├── EnrichmentService.java
+│ │ │ │ ├── ValidationService.java
+│ │ │ │ ├── AggregationService.java
+│ │ │ │ └── Teste2PipelineService.java
+│ │ │
+│ │ │ └── Application.java
+│ │ │
+│ │ └── resources/
+│ │ └── application.properties
+│ │
+│ └── test/
+│ └── java/
+│ └── br/com/intuitive/care/
+│ └── teste2/
+│ └── ValidationServiceTest.java
+│
 ├── data/
+│ ├── raw/
+│ │ ├── demonstracoes_contabeis/
+│ │ └── Relatorio_cadop.csv
+│ ├── processed/
+│ │ └── demonstracoes_contabeis/
+│ └── output/
+│ ├── consolidado_despesas.csv
+│ ├── consolidado_despesas.zip
+│ └── despesas_agregadas.csv
+│
 ├── logs/
+│
 ├── pom.xml
 └── README.md
 

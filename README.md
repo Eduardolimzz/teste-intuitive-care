@@ -3,27 +3,14 @@
 **Candidato:** Eduardo Lima dos Santos  
 **Data:** Janeiro 2026  
 **Linguagem:** Java 17  
-**Framework:** Spring Boot 3.2.1
 
 ---
 
-## 📋 Sumário
-
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Status dos Testes](#-status-dos-testes)
-- [Teste 1](#-teste-1--integração-com-api-pública)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Pré-requisitos](#-pré-requisitos)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Trade-offs Técnicos](#-trade-offs-técnicos)
-- [Obserrvações](#-observações)
-- [Autor](#-autor)
-
----
 
 ## 📖 Sobre o Projeto
 
-O projeto está em **fase inicial**, com foco na configuração correta do ambiente, estrutura base do backend em Java e preparação para as próximas etapas do teste, que envolvem:
+O projeto foi desenvolvido de forma incremental, com foco na construção de uma base sólida, organizada e alinhada às boas práticas para atender às etapas propostas no teste técnico.
+
 
 1. **Integração com APIs** - Consumo da API de Dados Abertos da ANS
 2. **Processamento de Dados** - ETL, validação e transformação de arquivos
@@ -32,149 +19,60 @@ O projeto está em **fase inicial**, com foco na configuração correta do ambie
 
 ---
 
-## 📌 Status dos Testes
+## 🧪 Testes Implementados
 
-- [x] **Teste 1 – Integração com API Pública**
-- [x] **Teste 2 – Transformação, Validação e Agregação de Dados**
-- [ ] **Teste 3 – Banco de Dados e Análise SQL**
-- [ ] **Teste 4 – API e Interface Web**
+### 🔹 Teste 1 – Integração com API Pública
+**Objetivo:**  
+Consumir a API de Dados Abertos da ANS, identificar automaticamente os últimos
+trimestres disponíveis, processar os arquivos de despesas e consolidar os dados
+em um único arquivo CSV.
 
----
-
-## ✅ Teste 1 – Integração com API Pública
-
-### 📎 Objetivo
-
-Realizar a integração com a **API de Dados Abertos da ANS**, processar os arquivos de demonstrações contábeis e gerar um arquivo consolidado contendo as **despesas com eventos/sinistros** dos **últimos 3 trimestres disponíveis**.
+📄 Documentação detalhada disponível em:  
+`src/main/java/br/com/intuitive/care/TESTE_1.md`
 
 ---
 
-### ⚙️ O que foi implementado
+### 🔹 Teste 2 – Validação, Enriquecimento e Agregação
+**Objetivo:**  
+Validar os dados consolidados no Teste 1, enriquecer com informações cadastrais
+das operadoras e gerar métricas agregadas para análise estatística.
 
-O Teste 1 contempla as seguintes etapas:
-
-#### 1. Acesso à API da ANS
-- Consumo da API pública da ANS:
-```bash
-https://dadosabertos.ans.gov.br/FTP/PDA/
-```
-
-- Identificação automática dos **últimos 3 trimestres disponíveis**
-- Download dos arquivos compactados (ZIP), considerando variações de estrutura entre diretórios
-
-#### 2. Processamento dos Arquivos
-- Download automático dos arquivos ZIP
-- Extração dos arquivos compactados
-- Identificação e leitura apenas dos arquivos relacionados a **Despesas com Eventos/Sinistros**
-- Normalização dos dados relevantes para um modelo único
-
-#### 3. Consolidação dos Dados
-- Consolidação das informações dos 3 trimestres em memória
-- Geração de um arquivo CSV consolidado com as colunas:
-- `CNPJ`
-- `RazaoSocial`
-- `Ano`
-- `Trimestre`
-- `ValorDespesas`
-
-#### 4. Tratamento de Inconsistências
-Durante o processamento, foram tratados os seguintes cenários:
-- CNPJs duplicados com razões sociais diferentes
-- Valores zerados ou negativos
-- Variações no formato de trimestre/ano
-
-As decisões de tratamento estão documentadas na seção de **Trade-offs Técnicos**.
-
-#### 5. Resultado Final
-- Geração do arquivo:
-```bash
-consolidado_despesas.csv
-```
-
-- Compactação do resultado final em:
-```bash
-consolidado_despesas.zip
-```
----
-## ✅ Teste 2 – Transformação, Validação e Agregação de Dados
-
-### 📎 Objetivo
-
-A partir do arquivo consolidado gerado no Teste 1, realizar:
-- Validação dos dados
-- Enriquecimento com informações cadastrais da ANS
-- Agregação estatística das despesas
-- Geração de um novo arquivo CSV com métricas consolidadas
-
-### ⚙️ Etapas implementadas
-
-#### 1. Entrada de dados
-- Leitura do arquivo:
-```bash
-data/output/consolidado_despesas.csv
-```
-#### 2. Download do cadastro de operadoras
-
-- Download automático do arquivo Relatorio_cadop.csv da ANS
-- Leitura e indexação dos dados por CNPJ
-
-#### 3. Validação dos registros
-Foram implementadas validações para:
-- CNPJ (formato e dígitos verificadores)
-- Razão social (não nula e não vazia)
-- Valores de despesa (positivos)
-- Essas validações possuem testes unitários dedicados.
-
-#### 4. Enriquecimento dos dados
-Cada despesa foi enriquecida com:
-
-- Registro ANS
-- Modalidade da operadora
-- UF (quando disponível)
-
-#### 5. Agregação estatística
-
-Os dados foram agregados por:
-- Razão Social
-- UF
-- 
-Com cálculo de:
-- Total de despesas
-- Média
-- Desvio padrão
-
-#### 6. Resultado final
-
-Geração do arquivo:
-```bash
-data/output/despesas_agregadas.csv
-```
-
----
-## ✅ Testes Unitários
-
-O projeto conta com testes unitários automatizados para garantir a confiabilidade das regras de negócio implementadas, especialmente no Teste 2 (validação, enriquecimento e agregação de dados).
-
-Os testes foram desenvolvidos utilizando JUnit 5, cobrindo cenários positivos e negativos das validações.
+📄 Documentação detalhada disponível em:  
+`src/main/java/br/com/intuitive/care/TESTE_2.md`
 
 ---
 
-###  Testes implementados
+### 🔹 Teste 3 – Banco de Dados e Análise SQL
+**Objetivo:**  
+Modelar a estrutura do banco de dados, definir tipos adequados, índices e
+desenvolver queries analíticas conforme solicitado no teste técnico.
 
-Atualmente, estão cobertos os seguintes cenários:
+📄 Documentação detalhada disponível em:  
+`database/mysql/teste3/README.md`
 
-- Validação de CNPJ válido
-- Rejeição de CNPJ inválido ou nulo
-- Validação de razão social válida
-- Rejeição de razão social vazia ou nula
+---
+
+### 🔹 Teste 4 – API e Interface Web
+**Objetivo:**  
+Desenvolver uma API REST e uma interface web para consulta e visualização dos
+dados processados.
+
+📌 Status: **não iniciado** (escopo documentado e planejado conforme especificação do teste)
+
+---
+
+## 🧪 Testes Unitários
+
+O projeto conta com **testes unitários automatizados**, focados principalmente nas
+regras críticas de validação implementadas no Teste 2.
+
+- Validação de CNPJ
+- Validação de razão social
 - Validação de valores positivos
-- Rejeição de valores zero ou negativos
 
-Esses testes garantem que apenas dados consistentes avancem para as etapas de enriquecimento e agregação.
+Os testes foram desenvolvidos utilizando **JUnit 5**, garantindo maior confiabilidade
+no pipeline de processamento de dados.
 
----
-
-### ▶️ Executando os testes
 
 Para executar todos os testes unitários do projeto, utilize o comando abaixo:
 ```bash
@@ -182,37 +80,14 @@ mvn test
 ```
 ---
 
-### 📄 Exemplo de saída esperada
-
-```bash
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running br.com.intuitive.care.teste2.ValidationServiceTest
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
-[INFO]
-[INFO] BUILD SUCCESS
-[INFO] -------------------------------------------------------
-```
----
-
-### 📌 Observação
-
-Os testes unitários foram priorizados nas regras críticas de validação, por serem pontos sensíveis no processamento de grandes volumes de dados.
-As demais etapas (download, parsing e agregação) foram testadas de forma integrada durante a execução do pipeline completo.
-
----
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
 - **Java 17**
-- **Spring Boot 3.2.1**
+- **Spring Boot 3**
 - **Maven**
-- **Spring Web**
-- **Spring Data JPA**
 - **MySQL 8.0**
-- **Lombok**
-- **Springdoc OpenAPI (Swagger)**
+- **JUnit 5**
 
 ### Ferramentas
 - **IntelliJ IDEA**
@@ -228,7 +103,6 @@ Antes de executar o projeto, certifique-se de ter instalado:
 - [x] **JDK 17 ou superior** - [Download](https://www.oracle.com/java/technologies/downloads/)
 - [x] **Maven 3.8+** - [Download](https://maven.apache.org/download.cgi)
 - [x] **MySQL 8.0** - [Download](https://dev.mysql.com/downloads/)
-- [x] **Node.js 18+ e npm** - [Download](https://nodejs.org/)
 - [x] **Git** - [Download](https://git-scm.com/downloads)
 
 ### Verificar Instalação
@@ -246,72 +120,29 @@ git --version
 
 ```
 teste-intuitive-care/
-├── src/
-│ ├── main/
-│ │ ├── java/
-│ │ │ └── br/com/intuitive/care/
-│ │ │
-│ │ │ ├── config/
-│ │ │ │ ├── teste1/
-│ │ │ │ └── teste2/
-│ │ │
-│ │ │ ├── controller/
-│ │ │ │ ├── teste1/
-│ │ │ │ │ └── AnsController.java
-│ │ │ │ └── teste2/
-│ │ │ │ └── Teste2Controller.java
-│ │ │
-│ │ │ ├── model/
-│ │ │ │ ├── teste1/
-│ │ │ │ │ └── DespesaRecord.java
-│ │ │ │ └── teste2/
-│ │ │ │ ├── DespesaConsolidada.java
-│ │ │ │ ├── DespesaEnriquecida.java
-│ │ │ │ └── DespesaAgregada.java
-│ │ │
-│ │ │ ├── repository/
-│ │ │ │ └── (reservado para Teste 3)
-│ │ │
-│ │ │ ├── service/
-│ │ │ │ ├── teste1/
-│ │ │ │ │ ├── AnsFileDownloaderService.java
-│ │ │ │ │ ├── AnsService.java
-│ │ │ │ │ ├── ConsolidacaoService.java
-│ │ │ │ │ └── ZipExtractionService.java
-│ │ │ │ └── teste2/
-│ │ │ │ ├── OperadoraDownloaderService.java
-│ │ │ │ ├── EnrichmentService.java
-│ │ │ │ ├── ValidationService.java
-│ │ │ │ ├── AggregationService.java
-│ │ │ │ └── Teste2PipelineService.java
-│ │ │
-│ │ │ └── Application.java
-│ │ │
-│ │ └── resources/
-│ │ └── application.properties
-│ │
-│ └── test/
-│ └── java/
-│ └── br/com/intuitive/care/
-│ └── teste2/
-│ └── ValidationServiceTest.java
+├── src/main/java/br/com/intuitive/care/
+│   ├── config/
+│   ├── controller/
+│   ├── model/
+│   ├── service/
+│   ├── TESTE_1.md
+│   └── TESTE_2.md
+│
+├── database/mysql/teste3/
+│   ├── ddl/
+│   ├── dml/
+│   ├── queries/
+│   └── README.md
 │
 ├── data/
-│ ├── raw/
-│ │ ├── demonstracoes_contabeis/
-│ │ └── Relatorio_cadop.csv
-│ ├── processed/
-│ │ └── demonstracoes_contabeis/
-│ └── output/
-│ ├── consolidado_despesas.csv
-│ ├── consolidado_despesas.zip
-│ └── despesas_agregadas.csv
+│   ├── raw/
+│   ├── processed/
+│   └── output/
 │
-├── logs/
+├── src/test/
+│   └── java/
 │
-├── pom.xml
 └── README.md
-
 ```
 ---
 ## 🧠 Trade-offs Técnicos
@@ -330,12 +161,6 @@ teste-intuitive-care/
 As escolhas priorizaram **simplicidade, legibilidade e resiliência**, seguindo o princípio **KISS (Keep It Simple)**.
 
 ---
-## 📄 Observações
-
-Este projeto faz parte de um processo seletivo e está sendo desenvolvido de forma incremental, priorizando boas práticas, clareza de código e organização.
-
----
-
 ## 👤 Autor
 
 <div align="center">
@@ -349,4 +174,4 @@ Este projeto faz parte de um processo seletivo e está sendo desenvolvido de for
 **Contato**: eduardoaluno1800@gmail.com
 ---
 
-**Desenvolvido com ☕ e 💙 para IntuitiveCare**
+**Projeto desenvolvido como parte do processo seletivo da IntuitiveCare.**

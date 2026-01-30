@@ -1,7 +1,7 @@
 package br.com.intuitive.care.controller.teste1;
 
 import br.com.intuitive.care.service.teste1.AnsFileDownloaderService;
-import br.com.intuitive.care.service.teste1.AnsService;
+import br.com.intuitive.care.service.teste1.AnsDataService;
 import br.com.intuitive.care.service.teste1.ConsolidacaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +18,14 @@ public class AnsController {
     private static final Logger logger = LoggerFactory.getLogger(AnsController.class);
 
     private final AnsFileDownloaderService downloaderService;
-    private final AnsService ansService;
+    private final AnsDataService ansDataService;
     private final ConsolidacaoService consolidacaoService;
 
     public AnsController(AnsFileDownloaderService downloaderService,
-                         AnsService ansService,
+                         AnsDataService ansDataService,
                          ConsolidacaoService consolidacaoService) {
         this.downloaderService = downloaderService;
-        this.ansService = ansService;
+        this.ansDataService = ansDataService;
         this.consolidacaoService = consolidacaoService;
     }
 
@@ -36,7 +36,7 @@ public class AnsController {
             logger.info("Iniciando processamento completo");
             downloaderService.downloadUltimosTrimestres();
             response.put("download", "OK");
-            ansService.extrairArquivosZip();
+            ansDataService.extrairArquivosZip();
             response.put("extracao", "OK");
             String arquivoFinal = consolidacaoService.consolidarDespesas();
             response.put("consolidacao", "OK");
@@ -67,7 +67,7 @@ public class AnsController {
     @PostMapping("/extrair")
     public ResponseEntity<Map<String, String>> extrairArquivos() {
         try {
-            ansService.extrairArquivosZip();
+            ansDataService.extrairArquivosZip();
             return ResponseEntity.ok(Map.of("status", "SUCCESS"));
         } catch (Exception e) {
             logger.error("Erro na extração: {}", e.getMessage());

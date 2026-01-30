@@ -10,14 +10,14 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Service
-public class Teste2PipelineService {
+public class DataProcessingPipelineService {
 
     private final ValidationService validation;
     private final EnrichmentService enrichment;
     private final AggregationService aggregation;
     private final OperadoraDownloaderService downloader;
 
-    public Teste2PipelineService(
+    public DataProcessingPipelineService(
             ValidationService validation,
             EnrichmentService enrichment,
             AggregationService aggregation,

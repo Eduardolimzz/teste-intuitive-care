@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.*;
 
 @Service
-public class AnsService {
+public class AnsDataService {
 
     private final ZipExtractionService zipExtractionService;
 
@@ -16,7 +16,7 @@ public class AnsService {
     private static final Path PROCESSED_BASE =
             Paths.get("data/processed/demonstracoes_contabeis/2025");
 
-    public AnsService(ZipExtractionService zipExtractionService) {
+    public AnsDataService(ZipExtractionService zipExtractionService) {
         this.zipExtractionService = zipExtractionService;
     }
 

@@ -23,7 +23,7 @@ Este teste atua como um **pipeline de transformação e qualidade de dados**.
 
 ---
 
-## 📥 Entrada de Dados
+##  Entrada de Dados
 
 O Teste 2 utiliza como entrada o arquivo gerado no Teste 1:
 
@@ -49,7 +49,7 @@ src/main/java/br/com/intuitive/care/
 └── service/teste2
 ```
 ---
-### 🔧 Componentes do Teste 2
+## 🔧 Componentes do Teste 2
 ### 1️⃣ Pipeline de Execução
 #### `Teste2PipelineService`
 

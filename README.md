@@ -27,7 +27,10 @@ Consumir a API de Dados Abertos da ANS, identificar automaticamente os últimos
 trimestres disponíveis, processar os arquivos de despesas e consolidar os dados
 em um único arquivo CSV.
 
-📄 Documentação detalhada disponível em:  
+📂 Código-fonte:  
+`src/main/java/br/com/intuitive/care/**/teste1`
+
+📄 Documentação detalhada:  
 `src/main/java/br/com/intuitive/care/TESTE_1.md`
 
 ---
@@ -37,7 +40,10 @@ em um único arquivo CSV.
 Validar os dados consolidados no Teste 1, enriquecer com informações cadastrais
 das operadoras e gerar métricas agregadas para análise estatística.
 
-📄 Documentação detalhada disponível em:  
+📂 Código-fonte:  
+`src/main/java/br/com/intuitive/care/**/teste2`
+
+📄 Documentação detalhada:  
 `src/main/java/br/com/intuitive/care/TESTE_2.md`
 
 ---
@@ -47,7 +53,10 @@ das operadoras e gerar métricas agregadas para análise estatística.
 Modelar a estrutura do banco de dados, definir tipos adequados, índices e
 desenvolver queries analíticas conforme solicitado no teste técnico.
 
-📄 Documentação detalhada disponível em:  
+📂 Scripts e documentação:  
+`database/mysql/teste3/`
+
+📄 Documentação detalhada:  
 `database/mysql/teste3/README.md`
 
 ---

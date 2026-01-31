@@ -51,7 +51,7 @@ src/main/java/br/com/intuitive/care/
 ---
 ## 🔧 Componentes do Teste 2
 ### 1️⃣ Pipeline de Execução
-#### `Teste2PipelineService`
+#### `DataProcessingPipelineService`
 
 Classe responsável por orquestrar todo o fluxo do Teste 2.
 

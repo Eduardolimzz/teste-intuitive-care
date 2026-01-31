@@ -1,15 +1,18 @@
 # Teste IntuitiveCare 2026 - Estágio
 
-**Candidato:** Eduardo Lima dos Santos  
-**Data:** Janeiro 2026  
-**Linguagem:** Java 17  
+Projeto técnico desenvolvido para o processo seletivo da **IntuitiveCare**, com foco em integração de dados, processamento ETL, modelagem de banco de dados e boas práticas de desenvolvimento backend em Java.
+
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
-O projeto foi desenvolvido de forma incremental, com foco na construção de uma base sólida, organizada e alinhada às boas práticas para atender às etapas propostas no teste técnico.
+
+Este projeto implementa, de forma incremental, as etapas propostas no teste técnico da IntuitiveCare, priorizando organização, clareza de responsabilidades e boas práticas de desenvolvimento backend.
 
 
 1. **Integração com APIs** - Consumo da API de Dados Abertos da ANS
@@ -19,58 +22,58 @@ O projeto foi desenvolvido de forma incremental, com foco na construção de uma
 
 ---
 
-## 🧪 Testes Implementados
+## Testes Implementados
 
-### 🔹 Teste 1 – Integração com API Pública
+### Teste 1 – Integração com API Pública
 **Objetivo:**  
 Consumir a API de Dados Abertos da ANS, identificar automaticamente os últimos
 trimestres disponíveis, processar os arquivos de despesas e consolidar os dados
 em um único arquivo CSV.
 
-📂 Código-fonte:  
+ Código-fonte:  
 `src/main/java/br/com/intuitive/care/**/teste1`
 
-📄 Documentação detalhada:  
+ Documentação detalhada:  
 `src/main/java/br/com/intuitive/care/TESTE_1.md`
 
 ---
 
-### 🔹 Teste 2 – Validação, Enriquecimento e Agregação
+### Teste 2 – Validação, Enriquecimento e Agregação
 **Objetivo:**  
 Validar os dados consolidados no Teste 1, enriquecer com informações cadastrais
 das operadoras e gerar métricas agregadas para análise estatística.
 
-📂 Código-fonte:  
+ Código-fonte:  
 `src/main/java/br/com/intuitive/care/**/teste2`
 
-📄 Documentação detalhada:  
+ Documentação detalhada:  
 `src/main/java/br/com/intuitive/care/TESTE_2.md`
 
 ---
 
-### 🔹 Teste 3 – Banco de Dados e Análise SQL
+### Teste 3 – Banco de Dados e Análise SQL
 **Objetivo:**  
 Modelar a estrutura do banco de dados, definir tipos adequados, índices e
 desenvolver queries analíticas conforme solicitado no teste técnico.
 
-📂 Scripts e documentação:  
+ Scripts e documentação:  
 `database/mysql/teste3/`
 
-📄 Documentação detalhada:  
+ Documentação detalhada:  
 `database/mysql/teste3/README.md`
 
 ---
 
-### 🔹 Teste 4 – API e Interface Web
+### Teste 4 – API e Interface Web
 **Objetivo:**  
 Desenvolver uma API REST e uma interface web para consulta e visualização dos
 dados processados.
 
-📌 Status: **não iniciado** (escopo documentado e planejado conforme especificação do teste)
+ Status: **não iniciado** (escopo documentado e planejado conforme especificação do teste)
 
 ---
 
-## 🧪 Testes Unitários
+## Testes Unitários
 
 O projeto conta com **testes unitários automatizados**, focados principalmente nas
 regras críticas de validação implementadas no Teste 2.
@@ -89,7 +92,7 @@ mvn test
 ```
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - **Java 17**
@@ -105,7 +108,7 @@ mvn test
 
 ---
 
-## ✅ Pré-requisitos
+## Pré-requisitos
 
 Antes de executar o projeto, certifique-se de ter instalado:
 
@@ -122,10 +125,28 @@ mvn -version
 mysql --version
 git --version    
 ```
+---
+## Como Executar o Projeto
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/Eduardolimzz/teste-intuitive-care.git
+cd teste-intuitive-care
+```
+
+2. Execute os testes:
+```bash
+mvn test
+```
+
+3. Execute a aplicação (quando aplicável):
+```bash
+mvn spring-boot:run
+```
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 teste-intuitive-care/
@@ -154,7 +175,7 @@ teste-intuitive-care/
 └── README.md
 ```
 ---
-## 🧠 Trade-offs Técnicos
+## Trade-offs Técnicos
 
 ### Processamento dos arquivos
 
@@ -170,17 +191,15 @@ teste-intuitive-care/
 As escolhas priorizaram **simplicidade, legibilidade e resiliência**, seguindo o princípio **KISS (Keep It Simple)**.
 
 ---
-## 👤 Autor
+## Contato
 
-<div align="center">
-  <img src="https://github.com/Eduardolimzz.png" width="100px" style="border-radius: 50%">
+Em caso de dúvidas ou interesse em discutir o projeto:
 
-**Eduardo Lima dos Santos**
+-  Email: **eduardoaluno1800@gmail.com**
+-  LinkedIn: https://www.linkedin.com/in/eduardo-lima-dos-santos-3b1092316/
 
-[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github)](https://github.com/Eduardolimzz)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/eduardo-lima-3b1092316/)
-
-**Contato**: eduardoaluno1800@gmail.com
 ---
 
-**Projeto desenvolvido como parte do processo seletivo da IntuitiveCare.**
+## License
+
+[MIT](LICENSE) © Eduardo Lima

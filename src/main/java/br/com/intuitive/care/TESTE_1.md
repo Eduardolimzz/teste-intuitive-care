@@ -9,7 +9,7 @@ completo do Teste 1 apenas pela leitura**, e em seguida **navegar pelo código c
 
 ---
 
-## 🎯 Objetivo do Teste 1
+## Objetivo do Teste 1
 
 O Teste 1 tem como objetivo:
 
@@ -46,7 +46,7 @@ A implementação foi desenvolvida para ser **resiliente a essas variações**.
 O Teste 1 foi dividido em componentes bem definidos, cada um com uma
 responsabilidade clara.
 
-### 📂 Localização do código
+### Localização do código
 
 ```
 src/main/java/br/com/intuitive/care/
@@ -59,9 +59,9 @@ src/main/java/br/com/intuitive/care/
 
 ---
 
-## 🔧 Componentes do Teste 1
+## Componentes do Teste 1
 
-### 1️⃣ Configuração HTTP
+### 1. Configuração HTTP
 
 #### `RestTemplateConfig`
 
@@ -75,7 +75,7 @@ requisições HTTP para a API da ANS.
 
 ---
 
-### 2️⃣ Controller
+### 2. Controller
 
 #### `AnsController`
 
@@ -91,7 +91,7 @@ de separação de responsabilidades.
 
 ---
 
-### 3️⃣ Serviços de Integração e Download
+### 3. Serviços de Integração e Download
 
 #### `AnsDataService`
 
@@ -119,7 +119,7 @@ Essa separação facilita manutenção e testes futuros.
 
 ---
 
-### 4️⃣ Extração de Arquivos
+### 4. Extração de Arquivos
 
 #### `ZipExtractionService`
 
@@ -132,7 +132,7 @@ Responsável pela **extração automática dos arquivos ZIP** baixados.
 
 ---
 
-### 5️⃣ Processamento e Consolidação
+### 5. Processamento e Consolidação
 
 #### `ConsolidacaoService`
 
@@ -150,7 +150,7 @@ Durante esse processo, são tratados cenários como:
 
 ---
 
-### 6️⃣ Modelo de Dados
+### 6. Modelo de Dados
 
 #### `DespesaRecord`
 
@@ -168,7 +168,7 @@ antes da geração do CSV final.
 
 ---
 
-## 🔄 Fluxo Completo do Teste 1
+## Fluxo Completo do Teste 1
 
 De forma resumida, o fluxo executado é:
 
@@ -183,7 +183,7 @@ De forma resumida, o fluxo executado é:
 
 ---
 
-## 📤 Resultado Gerado
+## Resultado Gerado
 
 Ao final da execução do Teste 1, são gerados:
 
@@ -197,7 +197,7 @@ utilizados no Teste 2.
 
 ---
 
-## 📌 Observação Final
+## Observação Final
 
 O Teste 1 representa a base de dados do projeto.
 A qualidade e organização desta etapa são fundamentais para garantir

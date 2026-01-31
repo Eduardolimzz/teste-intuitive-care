@@ -12,7 +12,7 @@ O objetivo deste README é permitir que o leitor compreenda:
 
 ---
 
-## 🎯 Objetivo do Teste 3
+## Objetivo do Teste 3
 
 O Teste 3 tem como objetivos principais:
 
@@ -39,7 +39,7 @@ dedicados, garantindo reprodutibilidade do processo.
 
 ---
 
-## 📂 Estrutura de Diretórios
+## Estrutura de Diretórios
 
 ```text
 database/mysql/teste3/
@@ -64,7 +64,7 @@ do projeto em ambientes diferentes.
 
 ---
 
-## 🔧 Modelagem do Banco de Dados (DDL)
+## Modelagem do Banco de Dados (DDL)
 #### `01_create_tables.sql`
 
 Responsável pela criação das tabelas principais do projeto.
@@ -126,7 +126,7 @@ Importa os dados agregados gerados no Teste 2.
 ---
 
 ## Queries Analíticas
-### 📄 Query 1 – Crescimento de Despesas por Operadora
+### Query 1 – Crescimento de Despesas por Operadora
 
 #### `query1_crescimento_operadoras.sql`
 
@@ -142,7 +142,7 @@ entre o primeiro e o último trimestre analisado.
 
 ---
 
-### 📄 Query 2 – Distribuição de Despesas por UF
+### Query 2 – Distribuição de Despesas por UF
 
 #### `query2_distribuicao_uf.sql`
 
@@ -157,7 +157,7 @@ despesas totais.
 
 ---
 
-### 📄 Query 3 – Operadoras Acima da Média
+### Query 3 – Operadoras Acima da Média
 
 #### `query3_acima_media.sql`
 
@@ -172,7 +172,7 @@ em pelo menos 2 dos 3 trimestres analisados.
 - Estrutura pensada para facilitar ajustes futuros
 
 ---
-## 📌 Observação Final
+## Observação Final
 
 O Teste 3 consolida todo o trabalho realizado nos testes anteriores,
 transformando arquivos CSV em dados estruturados e analisáveis.

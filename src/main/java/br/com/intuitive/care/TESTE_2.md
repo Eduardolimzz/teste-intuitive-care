@@ -9,7 +9,7 @@ em banco de dados nas etapas seguintes.
 
 ---
 
-## 🎯 Objetivo do Teste 2
+## Objetivo do Teste 2
 
 O Teste 2 tem como principais objetivos:
 
@@ -23,7 +23,7 @@ Este teste atua como um **pipeline de transformação e qualidade de dados**.
 
 ---
 
-##  Entrada de Dados
+## Entrada de Dados
 
 O Teste 2 utiliza como entrada o arquivo gerado no Teste 1:
 
@@ -41,7 +41,7 @@ O código do Teste 2 está organizado por responsabilidade, seguindo o mesmo pad
 adotado no Teste 1.
 ---
 
-## 📂 Localização do código
+## Localização do código
 ```
 src/main/java/br/com/intuitive/care/
 ├── controller/teste2
@@ -49,8 +49,8 @@ src/main/java/br/com/intuitive/care/
 └── service/teste2
 ```
 ---
-## 🔧 Componentes do Teste 2
-### 1️⃣ Pipeline de Execução
+## Componentes do Teste 2
+### 1. Pipeline de Execução
 #### `DataProcessingPipelineService`
 
 Classe responsável por orquestrar todo o fluxo do Teste 2.
@@ -63,7 +63,7 @@ Classe responsável por orquestrar todo o fluxo do Teste 2.
 - Este serviço funciona como o ponto de entrada lógico do Teste 2.
 
 ---
-### 2️⃣ Validação dos Dados
+### 2. Validação dos Dados
 #### `ValidationService`
 
 Responsável por validar os dados consolidados antes do enriquecimento.
@@ -82,7 +82,7 @@ Responsável por validar os dados consolidados antes do enriquecimento.
 
 ---
 
-### 3️⃣ Download e Leitura de Dados Cadastrais
+### 3. Download e Leitura de Dados Cadastrais
 #### `OperadoraDownloaderService`
 
 Responsável por obter os dados cadastrais das operadoras diretamente da ANS.
@@ -96,7 +96,7 @@ Responsável por obter os dados cadastrais das operadoras diretamente da ANS.
 
 ---
 
-### 4️⃣ Enriquecimento dos Dados
+### 4. Enriquecimento dos Dados
 #### `EnrichmentService`
 
 Responsável por enriquecer os registros de despesas com informações cadastrais.
@@ -115,7 +115,7 @@ Responsável por enriquecer os registros de despesas com informações cadastrai
 
 ---
 
-### 5️⃣ Agregação Estatística
+### 5. Agregação Estatística
 #### `AggregationService`
 
 Responsável por gerar métricas agregadas a partir dos dados enriquecidos.
@@ -131,7 +131,7 @@ Responsável por gerar métricas agregadas a partir dos dados enriquecidos.
 
 ---
 
-## 🧪 Testes Unitários
+## Testes Unitários
 
 O Teste 2 conta com testes unitários automatizados, focados nas regras críticas
 de validação de dados.
@@ -151,7 +151,7 @@ src/test/java/br/com/intuitive/care/teste2/ValidationServiceTest.java
 Esses testes garantem confiabilidade e reduzem risco de propagação de dados inválidos.
 
 ---
-## 📤 Resultado Gerado
+## Resultado Gerado
 
 Ao final da execução do Teste 2, é gerado o arquivo:
 ```text
@@ -163,7 +163,7 @@ Este arquivo contém os dados validados, enriquecidos e agregados, prontos para:
 - Persistência em banco de dados (Teste 3)
 - Consumo por API ou interface web (Teste 4)
 ---
-## 📌 Observação Final
+## Observação Final
 
 O Teste 2 é uma etapa crítica do projeto, pois garante que os dados utilizados nas
 análises posteriores sejam consistentes, confiáveis e bem estruturados.

@@ -56,3 +56,21 @@ Thumbs.db
 !.gitkeep
 
 /data/
+
+# ===============================
+# PYTHON
+# ===============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.env
+
+# ===============================
+# FASTAPI / UVICORN
+# ===============================
+*.log
+

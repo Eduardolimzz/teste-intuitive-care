@@ -1,9 +1,7 @@
 <template>
   <div>
     <nav class="navbar">
-      <router-link to="/operadoras">Operadoras</router-link>
-      <router-link to="/estatisticas">Estatísticas</router-link>
-      <router-link to="/despesas-uf">Despesas por UF</router-link>
+      <div class="brand">Intuitive Care - Eduardo Lima dos Santos</div>
     </nav>
 
     <div class="container">
@@ -13,31 +11,34 @@
 </template>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #1e1e1e;
-  color: #fff;
+  background: #1a1a1a;
+  color: #ccc;
 }
 
 .navbar {
-  display: flex;
-  gap: 20px;
-  padding: 15px;
-  background: #000;
+  background: #252525;
+  padding: 15px 30px;
+  border-bottom: 1px solid #333;
 }
 
-.navbar a {
-  color: #4fc3f7;
-  text-decoration: none;
+.brand {
+  color: #fff;
+  font-size: 18px;
   font-weight: bold;
 }
 
-.navbar a.router-link-active {
-  text-decoration: underline;
-}
-
 .container {
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 </style>

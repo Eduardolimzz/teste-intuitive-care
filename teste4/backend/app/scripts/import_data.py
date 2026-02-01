@@ -3,11 +3,11 @@ import os
 from decimal import Decimal
 
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
-from app.models import Operadora, DespesaConsolidada
+from app.database import SessionLocal, engine, Base # Importe engine e Base
+from app.models import Operadora, DespesaConsolidada, DespesaAgregada
 
 # =====================================================
-# Caminho base do projeto (raiz do repositório)
+# Caminho base do projeto
 # =====================================================
 BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "../../../../")
@@ -17,31 +17,30 @@ DATA_DIR = os.path.join(BASE_DIR, "data", "output")
 
 
 # =====================================================
-# Importação das Operadoras (Relatorio_cadop.csv)
-# Delimitador: ;
+# Importação das Operadoras
+# Relatorio_cadop.csv (delimiter ;)
 # =====================================================
 def importar_operadoras(db: Session):
     path = os.path.join(DATA_DIR, "Relatorio_cadop.csv")
 
-    with open(path, encoding="latin-1") as file:
+    with open(path, encoding="latin-1", newline="") as file:
         reader = csv.DictReader(file, delimiter=";")
 
         for row in reader:
-            cnpj = row["CNPJ"].strip()
+            cnpj = row.get("CNPJ")
 
-            # Validação mínima de CNPJ
-            if not cnpj.isdigit() or len(cnpj) != 14:
+            if not cnpj:
                 continue
 
-            # Evita duplicação
-            existe = db.query(Operadora).filter_by(cnpj=cnpj).first()
-            if existe:
+            cnpj = cnpj.strip()
+
+            if db.query(Operadora).filter_by(cnpj=cnpj).first():
                 continue
 
             operadora = Operadora(
                 cnpj=cnpj,
-                razao_social=row["Razao_Social"].strip(),
-                uf=row["UF"].strip() if row.get("UF") else None,
+                razao_social=row.get("Razao_Social", "").strip(),
+                uf=row.get("UF"),
             )
 
             db.add(operadora)
@@ -51,52 +50,56 @@ def importar_operadoras(db: Session):
 
 # =====================================================
 # Importação das Despesas Consolidadas
-# consolidado_despesas.csv
-# Delimitador: ,
+# consolidado_despesas.csv (delimiter ,)
 # =====================================================
 def importar_despesas(db: Session):
     path = os.path.join(DATA_DIR, "consolidado_despesas.csv")
 
-    with open(path, encoding="utf-8") as file:
+    with open(path, encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file, delimiter=",")
+
+        print("COLUNAS DETECTADAS:", reader.fieldnames)
 
         for row in reader:
             try:
-                cnpj = row["CNPJ"].strip()
-
-                # Ignora linhas que não representam operadoras
-                if not cnpj.isdigit() or len(cnpj) != 14:
+                cnpj = row.get("CNPJ")
+                if not cnpj:
                     continue
 
-                ano = int(row["Ano"])
-                trimestre = int(row["Trimestre"])
+                cnpj = cnpj.strip()
 
-                # Replica constraints do banco (Teste 3)
+                ano = int(row.get("Ano", 0))
+                trimestre = int(row.get("Trimestre", 0))
+
+                # 🔥 Normalização do ano (12025 → 2025)
+                if ano > 10000:
+                    ano = ano - 10000
+
                 if ano < 2000 or ano > 2100:
                     continue
+
                 if trimestre < 1 or trimestre > 4:
                     continue
 
-                valor = (
-                    row["ValorDespesas"]
-                    .replace(".", "")
-                    .replace(",", ".")
-                )
+                valor_raw = row.get("ValorDespesas")
+                if not valor_raw:
+                    continue
+
+                valor = Decimal(valor_raw)
 
                 despesa = DespesaConsolidada(
                     cnpj=cnpj,
-                    razao_social=row["RazaoSocial"].strip(),
+                    razao_social=row.get("RazaoSocial", "").strip(),
                     ano=ano,
                     trimestre=trimestre,
-                    valor_despesas=Decimal(valor),
+                    valor_despesas=valor,
                 )
 
-                # merge garante idempotência
-                db.merge(despesa)
+                db.add(despesa)
 
-            except Exception:
-                # Qualquer linha inválida é ignorada
-                continue
+            except Exception as e:
+                print("ERRO NA LINHA:", row)
+                print("ERRO:", e)
 
     db.commit()
 
@@ -105,6 +108,8 @@ def importar_despesas(db: Session):
 # Execução principal
 # =====================================================
 if __name__ == "__main__":
+    Base.metadata.create_all(bind=engine)
+
     db = SessionLocal()
     try:
         importar_operadoras(db)

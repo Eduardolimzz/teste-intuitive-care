@@ -119,11 +119,6 @@ regras críticas de validação implementadas no Teste 2.
 Os testes foram desenvolvidos utilizando **JUnit 5**, garantindo maior confiabilidade
 no pipeline de processamento de dados.
 
-
-Para executar todos os testes unitários do projeto, utilize o comando abaixo:
-```bash
-mvn test
-```
 ---
 
 ## Tecnologias Utilizadas
@@ -131,7 +126,6 @@ mvn test
 ### Backend
 - **Java 17**
 - **Spring Boot 3**
-- **Maven**
 - **MySQL 8.0**
 - **JUnit 5**
 - **Python 3**
@@ -157,36 +151,28 @@ mvn test
 Antes de executar o projeto, certifique-se de ter instalado:
 
 - [x] **JDK 17 ou superior** - [Download](https://www.oracle.com/java/technologies/downloads/)
-- [x] **Maven 3.8+** - [Download](https://maven.apache.org/download.cgi)
 - [x] **MySQL 8.0** - [Download](https://dev.mysql.com/downloads/)
 - [x] **Git** - [Download](https://git-scm.com/downloads)
 
 ### Verificar Instalação
 
 ```bash
-java -version   
-mvn -version    
+java -version    
 mysql --version
 git --version    
 ```
 ---
-## Como Executar o Projeto
+## Execução e Uso
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/Eduardolimzz/teste-intuitive-care.git
-cd teste-intuitive-care
-```
+Este projeto foi desenvolvido como um **teste técnico**, com foco na implementação
+das etapas solicitadas, organização do código e clareza das soluções adotadas.
 
-2. Execute os testes:
-```bash
-mvn test
-```
+A execução dos testes e aplicações varia conforme o teste implementado
+(Java, Python ou frontend web), conforme documentado nos diretórios
+específicos de cada teste.
 
-3. Execute a aplicação (quando aplicável):
-```bash
-mvn spring-boot:run
-```
+Para fins de avaliação, recomenda-se a análise do código-fonte,
+da documentação e das evidências visuais apresentadas neste repositório.
 
 ---
 

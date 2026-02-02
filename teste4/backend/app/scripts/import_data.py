@@ -3,7 +3,7 @@ import os
 from decimal import Decimal
 
 from sqlalchemy.orm import Session
-from app.database import SessionLocal, engine, Base # Importe engine e Base
+from app.database import SessionLocal, engine, Base
 from app.models import Operadora, DespesaConsolidada, DespesaAgregada
 
 # =====================================================
@@ -28,6 +28,7 @@ def importar_operadoras(db: Session):
 
         for row in reader:
             cnpj = row.get("CNPJ")
+            registro_ans = row.get("REGISTRO_OPERADORA")
 
             if not cnpj:
                 continue
@@ -39,6 +40,7 @@ def importar_operadoras(db: Session):
 
             operadora = Operadora(
                 cnpj=cnpj,
+                registro_ans=registro_ans.strip() if registro_ans else None,
                 razao_social=row.get("Razao_Social", "").strip(),
                 uf=row.get("UF"),
             )
@@ -58,8 +60,6 @@ def importar_despesas(db: Session):
     with open(path, encoding="utf-8", newline="") as file:
         reader = csv.DictReader(file, delimiter=",")
 
-        print("COLUNAS DETECTADAS:", reader.fieldnames)
-
         for row in reader:
             try:
                 cnpj = row.get("CNPJ")
@@ -71,7 +71,7 @@ def importar_despesas(db: Session):
                 ano = int(row.get("Ano", 0))
                 trimestre = int(row.get("Trimestre", 0))
 
-                # 🔥 Normalização do ano (12025 → 2025)
+                # Normalização do ano (12025 → 2025)
                 if ano > 10000:
                     ano = ano - 10000
 
@@ -89,6 +89,7 @@ def importar_despesas(db: Session):
 
                 despesa = DespesaConsolidada(
                     cnpj=cnpj,
+                    registro_ans=cnpj,
                     razao_social=row.get("RazaoSocial", "").strip(),
                     ano=ano,
                     trimestre=trimestre,

@@ -7,64 +7,129 @@ import Chart from "chart.js/auto";
 const router = useRouter();
 const canvas = ref(null);
 const carregou = ref(false);
+const erro = ref(null);
+const loading = ref(false);
 
 function voltar() {
   router.push("/home");
 }
 
 onMounted(async () => {
-  const res = await api.get("/despesas-por-uf");
+  loading.value = true;
+  erro.value = null;
 
-  console.log("RESPOSTA COMPLETA:", res.data);
+  try {
+    console.log("🔍 Buscando dados de /despesas-por-uf...");
 
-  const dados = res.data.data;
+    const res = await api.get("/despesas-por-uf");
 
-  if (!dados || dados.length === 0) {
-    console.warn("Nenhum dado retornado para despesas por UF");
-    return;
-  }
+    console.log("✅ RESPOSTA COMPLETA:", res);
+    console.log("📊 DADOS:", res.data);
 
-  const labels = dados.map(item => item.uf);
-  const valores = dados.map(item => Number(item.total_despesas));
+    const dados = res.data.data;
 
-  new Chart(canvas.value, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: "Total de Despesas (R$)",
-          data: valores,
-          backgroundColor: "#444",
-          borderColor: "#666",
-          borderWidth: 1,
+    console.log("📋 Array de dados:", dados);
+    console.log("📏 Quantidade:", dados ? dados.length : 0);
+
+    if (!dados || dados.length === 0) {
+      console.warn("⚠️ Nenhum dado retornado para despesas por UF");
+      erro.value = "Nenhum dado disponível para exibir";
+      loading.value = false;
+      return;
+    }
+
+    // Mostra os primeiros 3 itens
+    console.log("🔍 Primeiros 3 itens:", dados.slice(0, 3));
+
+    const labels = dados.map(item => item.uf);
+    const valores = dados.map(item => {
+      const valor = Number(item.total_despesas);
+      console.log(`   ${item.uf}: ${item.total_despesas} -> ${valor}`);
+      return valor;
+    });
+
+    console.log("📊 Labels:", labels);
+    console.log("💰 Valores:", valores);
+
+    // Verifica se o canvas existe
+    if (!canvas.value) {
+      console.error("❌ Canvas não encontrado!");
+      erro.value = "Erro ao renderizar gráfico";
+      loading.value = false;
+      return;
+    }
+
+    console.log("✅ Canvas encontrado, criando gráfico...");
+
+    new Chart(canvas.value, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: "Total de Despesas (R$)",
+            data: valores,
+            backgroundColor: "#4CAF50",
+            borderColor: "#45a049",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: "#ccc",
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  label += 'R$ ' + context.parsed.y.toLocaleString('pt-BR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  });
+                }
+                return label;
+              }
+            }
+          }
         },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {
-          labels: {
-            color: "#ccc",
+        scales: {
+          x: {
+            ticks: { color: "#888" },
+            grid: { color: "#333" },
+          },
+          y: {
+            ticks: {
+              color: "#888",
+              callback: function(value) {
+                return 'R$ ' + value.toLocaleString('pt-BR');
+              }
+            },
+            grid: { color: "#333" },
           },
         },
       },
-      scales: {
-        x: {
-          ticks: { color: "#888" },
-          grid: { color: "#333" },
-        },
-        y: {
-          ticks: { color: "#888" },
-          grid: { color: "#333" },
-        },
-      },
-    },
-  });
+    });
 
-  carregou.value = true;
+    console.log("✅ Gráfico criado com sucesso!");
+    carregou.value = true;
+
+  } catch (error) {
+    console.error("❌ ERRO ao buscar/renderizar dados:", error);
+    console.error("Detalhes do erro:", error.response || error.message);
+    erro.value = `Erro ao carregar dados: ${error.message}`;
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
 
@@ -75,8 +140,10 @@ onMounted(async () => {
     <h1>Despesas por UF</h1>
 
     <div class="chart-container">
-      <p v-if="!carregou" class="loading">Carregando grafico...</p>
-      <canvas ref="canvas"></canvas>
+      <p v-if="loading" class="loading">Carregando dados...</p>
+      <p v-if="erro" class="erro">⚠️ {{ erro }}</p>
+      <p v-if="!loading && !erro && !carregou" class="loading">Preparando gráfico...</p>
+      <canvas ref="canvas" v-show="carregou"></canvas>
     </div>
   </div>
 </template>
@@ -107,15 +174,27 @@ h1 {
   border: 1px solid #333;
   padding: 20px;
   min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading {
   color: #888;
   text-align: center;
   padding: 40px;
+  font-size: 16px;
+}
+
+.erro {
+  color: #ff6b6b;
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
 }
 
 canvas {
   max-height: 500px;
+  width: 100%;
 }
 </style>

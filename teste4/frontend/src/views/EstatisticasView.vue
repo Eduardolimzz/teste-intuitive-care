@@ -5,14 +5,27 @@ import { api } from "../services/api";
 
 const router = useRouter();
 const dados = ref(null);
+const loading = ref(false); // ← ADICIONADO
 
 function voltar() {
   router.push("/home");
 }
 
+// ← ADICIONADO: Função para formatar valores
+function formatarReal(valor) {
+  if (!valor) return "0,00";
+  const numero = typeof valor === 'string' ? parseFloat(valor) : valor;
+  return numero.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
 onMounted(async () => {
+  loading.value = true; // ← ADICIONADO
   const res = await api.get("/estatisticas");
   dados.value = res.data;
+  loading.value = false; // ← ADICIONADO
 });
 </script>
 
@@ -22,16 +35,21 @@ onMounted(async () => {
 
     <h1>Estatisticas Gerais</h1>
 
+    <!-- ← ADICIONADO: Loading -->
+    <p v-if="loading" class="loading">Carregando...</p>
+
     <div v-if="dados">
       <div class="stats">
         <div class="stat-box">
           <p class="label">Total de Despesas</p>
-          <p class="value">R$ {{ dados.total_despesas }}</p>
+          <!-- ← MUDADO: Formatação -->
+          <p class="value">R$ {{ formatarReal(dados.total_despesas) }}</p>
         </div>
 
         <div class="stat-box">
           <p class="label">Media por Operadora</p>
-          <p class="value">R$ {{ dados.media_despesas }}</p>
+          <!-- ← MUDADO: Formatação -->
+          <p class="value">R$ {{ formatarReal(dados.media_despesas) }}</p>
         </div>
       </div>
 
@@ -48,7 +66,8 @@ onMounted(async () => {
           <tr v-for="(op, index) in dados.top5_operadoras" :key="op.razao_social">
             <td>{{ index + 1 }}</td>
             <td>{{ op.razao_social }}</td>
-            <td>R$ {{ op.total }}</td>
+            <!-- ← MUDADO: Formatação -->
+            <td>R$ {{ formatarReal(op.total_despesas) }}</td>
           </tr>
         </tbody>
       </table>
@@ -81,6 +100,14 @@ h2 {
   font-size: 18px;
   margin: 30px 0 15px 0;
   color: #fff;
+}
+
+/* ← ADICIONADO: Estilo do loading */
+.loading {
+  color: #888;
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
 }
 
 .stats {

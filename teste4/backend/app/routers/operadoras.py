@@ -19,23 +19,13 @@ from app.schemas import (
 
 router = APIRouter()
 
-# =====================================================
-# Cache simples para /api/estatisticas
-# Trade-off: Cache por 5 minutos
-# Justificativa: dados mudam trimestralmente, não precisa ser tempo real
-# =====================================================
 _cache_estatisticas = {
     "data": None,
     "timestamp": 0,
 }
-CACHE_TTL_SEGUNDOS = 300  # 5 minutos
+CACHE_TTL_SEGUNDOS = 300
 
 
-# =====================================================
-# GET /api/operadoras - Listagem paginada
-# Trade-off: Offset-based pagination
-# Justificativa: dados estáticos, simples de implementar e manter
-# =====================================================
 @router.get("/operadoras", response_model=PaginatedResponse)
 def listar_operadoras(
     page: int = Query(default=1, ge=1, description="Página atual"),
@@ -43,15 +33,9 @@ def listar_operadoras(
     busca: Optional[str] = Query(default=None, description="Filtro por razão social ou CNPJ"),
     db: Session = Depends(get_db),
 ):
-    """Lista todas as operadoras com paginação e filtro opcional."""
-
-    # Monta a query base
     query_total = db.query(func.count(Operadora.cnpj))
     query_dados = db.query(Operadora)
 
-    # Se houver busca, aplica filtro (busca no servidor)
-    # Trade-off: Busca no servidor (não no cliente)
-    # Justificativa: evita carregar todos os dados no front
     if busca:
         filtro = f"%{busca}%"
         query_total = query_total.filter(
@@ -61,17 +45,12 @@ def listar_operadoras(
             Operadora.razao_social.like(filtro) | Operadora.cnpj.like(filtro)
         )
 
-    # Conta total de registros
     total = query_total.scalar()
-
-    # Calcula offset e total de páginas
     offset = (page - 1) * limit
     total_pages = math.ceil(total / limit) if total > 0 else 1
 
-    # Busca os dados com paginação
     operadoras = query_dados.offset(offset).limit(limit).all()
 
-    # Converte para dicionários
     data = [
         OperadoraResponse.model_validate(op).model_dump()
         for op in operadoras
@@ -86,12 +65,8 @@ def listar_operadoras(
     }
 
 
-# =====================================================
-# GET /api/operadoras/{cnpj} - Detalhes de uma operadora
-# =====================================================
 @router.get("/operadoras/{cnpj}", response_model=OperadoraResponse)
 def detalhes_operadora(cnpj: str, db: Session = Depends(get_db)):
-    """Retorna os detalhes de uma operadora específica pelo CNPJ."""
     operadora = db.query(Operadora).filter(Operadora.cnpj == cnpj).first()
 
     if not operadora:
@@ -100,18 +75,12 @@ def detalhes_operadora(cnpj: str, db: Session = Depends(get_db)):
     return OperadoraResponse.model_validate(operadora)
 
 
-# =====================================================
-# GET /api/operadoras/{cnpj}/despesas - Histórico de despesas
-# =====================================================
 @router.get("/operadoras/{cnpj}/despesas")
 def despesas_operadora(cnpj: str, db: Session = Depends(get_db)):
-    """Retorna o histórico de despesas de uma operadora específica."""
-    # Primeiro verifica se a operadora existe
     operadora = db.query(Operadora).filter(Operadora.cnpj == cnpj).first()
     if not operadora:
         raise HTTPException(status_code=404, detail="Operadora não encontrada")
 
-    # Busca as despesas ordenadas por período
     despesas = (
         db.query(DespesaConsolidada)
         .filter(DespesaConsolidada.cnpj == cnpj)
@@ -131,30 +100,20 @@ def despesas_operadora(cnpj: str, db: Session = Depends(get_db)):
     }
 
 
-# =====================================================
-# GET /api/estatisticas - Estatísticas agregadas
-# Trade-off: Cache por 5 minutos
-# Justificativa: dados mudam trimestralmente, cache reduz carga no banco
-# =====================================================
 @router.get("/estatisticas", response_model=EstatisticasResponse)
 def estatisticas(db: Session = Depends(get_db)):
-    """Retorna estatísticas agregadas dos dados."""
     global _cache_estatisticas
 
-    # Verifica se o cache ainda é válido
     agora = time.time()
     if _cache_estatisticas["data"] and (agora - _cache_estatisticas["timestamp"]) < CACHE_TTL_SEGUNDOS:
         return _cache_estatisticas["data"]
 
-    # Calcula total de despesas
     total_result = db.query(func.coalesce(func.sum(DespesaConsolidada.valor_despesas), 0)).scalar()
     total_despesas = Decimal(str(total_result))
 
-    # Calcula média de despesas por operadora
     total_operadoras = db.query(func.count(Operadora.cnpj)).scalar()
     media_despesas = total_despesas / total_operadoras if total_operadoras > 0 else Decimal("0")
 
-    # Top 5 operadoras por total de despesas
     top5_query = (
         db.query(
             DespesaConsolidada.cnpj,
@@ -179,27 +138,22 @@ def estatisticas(db: Session = Depends(get_db)):
         top5_operadoras=top5,
     )
 
-    # Armazena no cache
     _cache_estatisticas["data"] = resultado
     _cache_estatisticas["timestamp"] = agora
 
     return resultado
 
 
-# =====================================================
-# GET /api/despesas-por-uf - Distribuição de despesas por UF
-# Usado pelo gráfico da página principal
-# =====================================================
 @router.get("/despesas-por-uf")
 def despesas_por_uf(db: Session = Depends(get_db)):
-    """Retorna o total de despesas agrupado por UF, ordenado do maior para o menor."""
     resultado = (
         db.query(
             Operadora.uf.label("uf"),
             func.sum(DespesaConsolidada.valor_despesas).label("total_despesas"),
-            func.count(func.distinct(DespesaConsolidada.cnpj)).label("qtd_operadoras"),
+            func.count(func.distinct(DespesaConsolidada.registro_ans)).label("qtd_operadoras"),
         )
-        .join(DespesaConsolidada, Operadora.cnpj == DespesaConsolidada.cnpj)
+        .select_from(DespesaConsolidada)
+        .join(Operadora, Operadora.registro_ans == DespesaConsolidada.registro_ans)
         .filter(Operadora.uf.isnot(None))
         .filter(Operadora.uf != "")
         .group_by(Operadora.uf)

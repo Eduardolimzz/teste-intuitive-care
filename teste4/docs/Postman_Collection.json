@@ -1,0 +1,320 @@
+{
+  "info": {
+    "name": "Teste 4 - Intuitive Care - Eduardo Lima",
+    "description": "API de Operadoras de Saúde e Despesas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "health"]
+        },
+        "description": "Verifica se a API e o banco de dados estão funcionando"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "health"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"status\": \"ok\",\n    \"database\": \"mysql\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Listar Operadoras (Paginado)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/operadoras?page=1&limit=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "operadoras"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1",
+              "description": "Número da página (começa em 1)"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "Quantidade de itens por página (máx: 100)"
+            }
+          ]
+        },
+        "description": "Lista todas as operadoras com paginação"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/operadoras?page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "operadoras"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"data\": [\n        {\n            \"cnpj\": \"00006037000127\",\n            \"razao_social\": \"UNIMED DE TATUI\",\n            \"uf\": \"SP\"\n        }\n    ],\n    \"total\": 1110,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 111\n}"
+        }
+      ]
+    },
+    {
+      "name": "Buscar Operadoras (com filtro)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/operadoras?page=1&limit=10&busca=UNIMED",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "operadoras"],
+          "query": [
+            {"key": "page", "value": "1"},
+            {"key": "limit", "value": "10"},
+            {
+              "key": "busca",
+              "value": "UNIMED",
+              "description": "Filtra por CNPJ ou Razão Social"
+            }
+          ]
+        },
+        "description": "Busca operadoras por CNPJ ou Razão Social"
+      },
+      "response": []
+    },
+    {
+      "name": "Detalhes da Operadora",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/operadoras/00006037000127",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "operadoras", "00006037000127"]
+        },
+        "description": "Retorna os dados cadastrais de uma operadora específica"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/operadoras/00006037000127",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "operadoras", "00006037000127"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"cnpj\": \"00006037000127\",\n    \"razao_social\": \"UNIMED DE TATUI\",\n    \"uf\": \"SP\"\n}"
+        },
+        {
+          "name": "Not Found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/operadoras/99999999999999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "operadoras", "99999999999999"]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"detail\": \"Operadora não encontrada\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Histórico de Despesas da Operadora",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/operadoras/00006037000127/despesas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "operadoras", "00006037000127", "despesas"]
+        },
+        "description": "Retorna o histórico de despesas de uma operadora específica"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/operadoras/00006037000127/despesas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "operadoras", "00006037000127", "despesas"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"cnpj\": \"00006037000127\",\n    \"razao_social\": \"UNIMED DE TATUI\",\n    \"despesas\": [\n        {\n            \"ano\": 2024,\n            \"trimestre\": 1,\n            \"valor_despesas\": \"150000.00\"\n        },\n        {\n            \"ano\": 2024,\n            \"trimestre\": 2,\n            \"valor_despesas\": \"180000.00\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Estatísticas Gerais",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/estatisticas",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "estatisticas"]
+        },
+        "description": "Retorna estatísticas agregadas: total de despesas, média, total de operadoras e top 5"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/estatisticas",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "estatisticas"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"total_despesas\": \"1234567890.00\",\n    \"media_despesas\": \"1112345.00\",\n    \"total_operadoras\": 1110,\n    \"top5_operadoras\": [\n        {\n            \"cnpj\": \"12345678000199\",\n            \"razao_social\": \"OPERADORA EXEMPLO\",\n            \"total_despesas\": \"50000000.00\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Despesas por UF",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/despesas-por-uf",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "despesas-por-uf"]
+        },
+        "description": "Retorna o total de despesas agrupado por UF (usado no gráfico)"
+      },
+      "response": [
+        {
+          "name": "Success",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/despesas-por-uf",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "despesas-por-uf"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n    \"data\": [\n        {\n            \"uf\": \"SP\",\n            \"total_despesas\": \"365125076710.20\",\n            \"qtd_operadoras\": 273\n        },\n        {\n            \"uf\": \"RJ\",\n            \"total_despesas\": \"295497672130.62\",\n            \"qtd_operadoras\": 75\n        }\n    ]\n}"
+        }
+      ]
+    }
+  ]
+}

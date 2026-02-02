@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
 from app.database import engine
-from app.models import Base   # 👈 ADICIONADO
+from app.models import Base
 from app.routers.operadoras import router
 
 app = FastAPI(title="Teste 4 - Intuitive Care")

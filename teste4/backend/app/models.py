@@ -5,6 +5,7 @@ class Operadora(Base):
     __tablename__ = "operadoras"
 
     cnpj = Column(String(14), primary_key=True)
+    registro_ans = Column(String(20))
     razao_social = Column(String(255))
     uf = Column(String(2))
 
@@ -14,6 +15,7 @@ class DespesaConsolidada(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     cnpj = Column(String(14))
+    registro_ans = Column(String(20))
     razao_social = Column(String(255))
     ano = Column(Integer)
     trimestre = Column(Integer)

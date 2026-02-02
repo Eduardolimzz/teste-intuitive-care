@@ -1,10 +1,14 @@
 # Teste IntuitiveCare 2026 - Estágio
 
-Projeto técnico desenvolvido para o processo seletivo da **IntuitiveCare**, com foco em integração de dados, processamento ETL, modelagem de banco de dados e boas práticas de desenvolvimento backend em Java.
+Projeto técnico desenvolvido para o processo seletivo da **IntuitiveCare**, com foco em integração de dados, processamento ETL, modelagem de banco de dados e boas práticas de desenvolvimento backend em Java e Python, além de desenvolvimento de API REST e interface web.
 
 ![Java](https://img.shields.io/badge/Java-17-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-green)
+![Vue.js](https://img.shields.io/badge/Vue.js-3-brightgreen)
+![Vite](https://img.shields.io/badge/Vite-purple)
 
 ---
 
@@ -18,7 +22,7 @@ Este projeto implementa, de forma incremental, as etapas propostas no teste téc
 1. **Integração com APIs** - Consumo da API de Dados Abertos da ANS
 2. **Processamento de Dados** - ETL, validação e transformação de arquivos
 3. **Banco de Dados** - Modelagem, queries SQL e análises
-4. **Desenvolvimento Web** - API REST e interface Vue.js
+4. **Desenvolvimento Web** – API REST (FastAPI) e interface Vue.js
 
 ---
 
@@ -66,10 +70,24 @@ desenvolver queries analíticas conforme solicitado no teste técnico.
 
 ### Teste 4 – API e Interface Web
 **Objetivo:**  
-Desenvolver uma API REST e uma interface web para consulta e visualização dos
-dados processados.
+Desenvolver uma API REST e uma interface web para consulta, visualização e análise
+dos dados consolidados nos testes anteriores.
 
- Status: **não iniciado** (escopo documentado e planejado conforme especificação do teste)
+A implementação inclui:
+- API REST desenvolvida em **Python (FastAPI)**
+- Integração com banco de dados **MySQL**
+- Endpoints para listagem, busca, detalhes e estatísticas
+- Interface web desenvolvida em **Vue 3**, consumindo a API
+- Visualização de dados e gráficos estatísticos
+
+Código-fonte:  
+`teste4/backend`
+
+Frontend:  
+`teste4/frontend`
+
+Documentação e testes de API:  
+`teste4/docs/Postman_Collection.json`
 
 ---
 
@@ -100,11 +118,21 @@ mvn test
 - **Maven**
 - **MySQL 8.0**
 - **JUnit 5**
+- **Python 3**
+- **FastAPI**
+- **SQLAlchemy**
+
+### Frontend
+- **Vue.js 3**
+- **Vite**
+- **Axios**
+- **Chart.js**
 
 ### Ferramentas
 - **IntelliJ IDEA**
 - **Git / GitHub**
-- **Postman** (para testes futuros de API)
+- **Postman** (testes e documentação da API)
+- **Node.js / npm**
 
 ---
 
@@ -172,7 +200,23 @@ teste-intuitive-care/
 ├── src/test/
 │   └── java/
 │
+├── teste4/
+│   ├── backend/
+│   │   ├── app/
+│   │   ├── venv/
+│   │
+│   ├── frontend/
+│   │   ├── src/
+│   │   ├── public/
+│   │
+│   └── docs/
+│       └── Postman_Collection.json
+│
+├── pom.xml
+├── LICENSE
+├── .gitignore
 └── README.md
+
 ```
 ---
 ## Trade-offs Técnicos

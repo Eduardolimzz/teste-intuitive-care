@@ -26,7 +26,7 @@ public class DespesaRecord {
     private String tipoInconsistencia;
 
     /**
-     * Construtor simplificado (sem flags de inconsistência)
+     * Construtor simplificado
      */
     public DespesaRecord(String cnpj, String razaoSocial, String trimestre, String ano, BigDecimal valorDespesas) {
         this.cnpj = cnpj;

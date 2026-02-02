@@ -11,10 +11,6 @@ import java.util.zip.ZipInputStream;
 @Service
 public class ZipExtractionService {
 
-    /**
-     * ✔️ MÉTODO ORIGINAL – USADO NO TESTE 1
-     * NÃO FOI ALTERADO
-     */
     public void extractZip(Path zipFilePath, Path destinationDir) {
         try {
             Files.createDirectories(destinationDir);
@@ -42,10 +38,6 @@ public class ZipExtractionService {
         }
     }
 
-    /**
-     * 🆕 NOVO MÉTODO – USADO NO TESTE 2
-     * Extrai o ZIP e retorna o caminho do CSV encontrado
-     */
     public Path extractZipAndReturnCsv(Path zipFilePath, Path destinationDir) {
         extractZip(zipFilePath, destinationDir);
 

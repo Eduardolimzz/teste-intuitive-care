@@ -19,27 +19,27 @@ onMounted(async () => {
   erro.value = null;
 
   try {
-    console.log("🔍 Buscando dados de /despesas-por-uf...");
+    console.log("Buscando dados de /despesas-por-uf...");
 
     const res = await api.get("/despesas-por-uf");
 
-    console.log("✅ RESPOSTA COMPLETA:", res);
-    console.log("📊 DADOS:", res.data);
+    console.log("RESPOSTA COMPLETA:", res);
+    console.log("DADOS:", res.data);
 
     const dados = res.data.data;
 
-    console.log("📋 Array de dados:", dados);
-    console.log("📏 Quantidade:", dados ? dados.length : 0);
+    console.log("Array de dados:", dados);
+    console.log("Quantidade:", dados ? dados.length : 0);
 
     if (!dados || dados.length === 0) {
-      console.warn("⚠️ Nenhum dado retornado para despesas por UF");
+      console.warn("Nenhum dado retornado para despesas por UF");
       erro.value = "Nenhum dado disponível para exibir";
       loading.value = false;
       return;
     }
 
     // Mostra os primeiros 3 itens
-    console.log("🔍 Primeiros 3 itens:", dados.slice(0, 3));
+    console.log("Primeiros 3 itens:", dados.slice(0, 3));
 
     const labels = dados.map(item => item.uf);
     const valores = dados.map(item => {
@@ -48,18 +48,18 @@ onMounted(async () => {
       return valor;
     });
 
-    console.log("📊 Labels:", labels);
-    console.log("💰 Valores:", valores);
+    console.log("Labels:", labels);
+    console.log("Valores:", valores);
 
     // Verifica se o canvas existe
     if (!canvas.value) {
-      console.error("❌ Canvas não encontrado!");
+      console.error("Canvas não encontrado!");
       erro.value = "Erro ao renderizar gráfico";
       loading.value = false;
       return;
     }
 
-    console.log("✅ Canvas encontrado, criando gráfico...");
+    console.log("Canvas encontrado, criando gráfico...");
 
     new Chart(canvas.value, {
       type: "bar",
@@ -120,11 +120,11 @@ onMounted(async () => {
       },
     });
 
-    console.log("✅ Gráfico criado com sucesso!");
+    console.log("Gráfico criado com sucesso!");
     carregou.value = true;
 
   } catch (error) {
-    console.error("❌ ERRO ao buscar/renderizar dados:", error);
+    console.error("ERRO ao buscar/renderizar dados:", error);
     console.error("Detalhes do erro:", error.response || error.message);
     erro.value = `Erro ao carregar dados: ${error.message}`;
   } finally {
@@ -141,7 +141,7 @@ onMounted(async () => {
 
     <div class="chart-container">
       <p v-if="loading" class="loading">Carregando dados...</p>
-      <p v-if="erro" class="erro">⚠️ {{ erro }}</p>
+      <p v-if="erro" class="erro"> {{ erro }}</p>
       <p v-if="!loading && !erro && !carregou" class="loading">Preparando gráfico...</p>
       <canvas ref="canvas" v-show="carregou"></canvas>
     </div>

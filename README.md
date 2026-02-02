@@ -90,6 +90,22 @@ Documentação e testes de API:
 `teste4/docs/Postman_Collection.json`
 
 ---
+## Interface Web (Teste 4)
+
+A interface web consome a API desenvolvida no Teste 4 e permite a visualização
+dos dados consolidados por meio de tabelas e gráficos.
+
+### Lista de Operadoras
+![Lista de Operadoras](assets/operadoras.png)
+
+### Estatísticas Gerais
+![Estatísticas Gerais](assets/estatisticas-gerais.png)
+
+### Despesas por UF
+![Despesas por UF](assets/despesas-por-uf.png)
+
+
+---
 
 ## Testes Unitários
 
